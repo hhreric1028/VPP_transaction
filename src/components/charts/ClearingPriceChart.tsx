@@ -7,17 +7,17 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { priceTrend } from '../../data/mockData';
+import { clearingPriceTrend } from '../../data/mockData';
 
 export function ClearingPriceChart() {
   return (
     <ResponsiveContainer width="100%" height={280}>
-      <LineChart data={priceTrend} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
+      <LineChart data={clearingPriceTrend} margin={{ top: 10, right: 20, bottom: 0, left: 0 }}>
         <CartesianGrid stroke="#e2e8f0" strokeDasharray="3 3" />
-        <XAxis dataKey="time" tick={{ fontSize: 12 }} stroke="#64748b" />
-        <YAxis unit=" 元" tick={{ fontSize: 12 }} stroke="#64748b" />
+        <XAxis dataKey="interval" tick={{ fontSize: 12 }} stroke="#64748b" />
+        <YAxis unit=" $" tick={{ fontSize: 12 }} stroke="#64748b" />
         <Tooltip
-          formatter={(value) => [`NT$${Number(value).toLocaleString()}/MWh`, '清算價格']}
+          formatter={(value) => [`${value} $/MWh`, '清算價格']}
           contentStyle={{ borderRadius: 8, borderColor: '#cbd5e1' }}
         />
         <Line

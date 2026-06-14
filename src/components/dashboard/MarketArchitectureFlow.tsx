@@ -1,49 +1,44 @@
-import {
-  ArrowRight,
-  BatteryCharging,
-  DatabaseZap,
-  Factory,
-  Gauge,
-  Landmark,
-  ShieldCheck,
-  Users,
-} from 'lucide-react';
+import { ArrowRight, BatteryCharging, Cpu, DatabaseZap, Factory, Gauge, RadioTower, Users } from 'lucide-react';
 import { SectionCard } from '../common/SectionCard';
 
 const participantGroups = [
   {
-    title: '供給端參與者',
+    title: '供給端',
     icon: Factory,
     items: ['火力發電機組', '再生能源機組', 'VPP 聚合商'],
   },
   {
-    title: '需求端參與者',
+    title: '需求端',
     icon: Users,
-    items: ['零售商', '大型用戶', '彈性負載'],
+    items: ['零售商 / 買方', '大型負載', '彈性負載'],
   },
   {
-    title: '儲能參與者',
+    title: '儲能端',
     icon: BatteryCharging,
-    items: ['電池儲能', '抽蓄水力', '電動車聚合商'],
+    items: ['電池儲能', '電動車聚合商'],
   },
 ];
 
-const modules = [
-  { title: '市場進入與資料交換', items: ['投標 / 報價上傳'], icon: DatabaseZap },
-  { title: '市場清算與價格形成', items: ['市場清算'], icon: Gauge },
-  { title: '調度結果發布', items: ['調度指令'], icon: ArrowRight },
-  { title: '計量與市場資料回收', items: ['計量資料'], icon: DatabaseZap },
-  { title: '結算與信用風險管理', items: ['結算', '信用風險'], icon: ShieldCheck },
+const platformModules = [
+  '投標 / 報價收集',
+  '可行性檢查',
+  '市場清算',
+  '價格形成',
+  '調度分配',
+  '市場結果發布',
 ];
+
+const agents = ['發電機組代理', '再生能源代理', '電池代理', '負載代理', 'VPP 聚合代理'];
 
 export function MarketArchitectureFlow() {
   return (
     <SectionCard
-      title="高階市場架構流程"
-      subtitle="從投標 / 報價申報，到清算、調度、計量、結算與信用風險管理。"
+      title="VPP 上層交易架構"
+      subtitle="市場參與者提交投標與報價，平台完成市場清算，低階代理回傳實際運轉回饋。"
     >
-      <div className="grid gap-5 xl:grid-cols-[280px_1fr]">
-        <div className="grid gap-3">
+      <div className="grid gap-5 xl:grid-cols-[280px_1fr_280px]">
+        <div className="space-y-3">
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">市場參與者</div>
           {participantGroups.map((group) => {
             const Icon = group.icon;
             return (
@@ -54,10 +49,7 @@ export function MarketArchitectureFlow() {
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   {group.items.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-md bg-white px-2.5 py-1 text-xs text-slate-600 ring-1 ring-slate-200"
-                    >
+                    <span key={item} className="rounded-md bg-white px-2.5 py-1 text-xs text-slate-600 ring-1 ring-slate-200">
                       {item}
                     </span>
                   ))}
@@ -66,35 +58,43 @@ export function MarketArchitectureFlow() {
             );
           })}
         </div>
-        <div className="grid gap-3 md:grid-cols-5">
-          {modules.map((module, index) => {
-            const Icon = module.icon;
-            return (
-              <div key={module.title} className="relative">
-                <div className="h-full rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-market-navy text-white">
-                    <Icon className="h-4 w-4" />
-                  </div>
-                  <h3 className="mt-4 text-sm font-semibold text-slate-900">{module.title}</h3>
-                  <div className="mt-3 space-y-2">
-                    {module.items.map((item) => (
-                      <div
-                        key={item}
-                        className="rounded-md bg-cyan-50 px-2.5 py-2 text-xs font-medium text-market-cyan"
-                      >
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                {index < modules.length - 1 ? (
-                  <ArrowRight className="absolute -right-4 top-1/2 z-10 hidden h-5 w-5 -translate-y-1/2 text-slate-400 md:block" />
-                ) : (
-                  <Landmark className="absolute right-3 top-3 h-4 w-4 text-slate-300" />
-                )}
+
+        <div className="relative rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+          <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-market-navy">
+            <DatabaseZap className="h-4 w-4" />
+            上層市場平台
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {platformModules.map((module) => (
+              <div key={module} className="rounded-lg border border-cyan-100 bg-cyan-50 px-3 py-3 text-sm font-medium text-market-cyan">
+                {module}
               </div>
-            );
-          })}
+            ))}
+          </div>
+          <div className="mt-4 grid gap-3 text-xs text-slate-600 md:grid-cols-3">
+            <div className="rounded-md bg-slate-50 p-3">
+              <RadioTower className="mb-2 h-4 w-4 text-market-blue" />
+              參與者提交投標、報價與可用量。
+            </div>
+            <div className="rounded-md bg-slate-50 p-3">
+              <Gauge className="mb-2 h-4 w-4 text-market-blue" />
+              平台輸出清算價格與調度目標。
+            </div>
+            <div className="rounded-md bg-slate-50 p-3">
+              <Cpu className="mb-2 h-4 w-4 text-market-blue" />
+              代理回傳出力、SOC、偏差與限制狀態。
+            </div>
+          </div>
+          <ArrowRight className="absolute -right-4 top-1/2 z-10 hidden h-5 w-5 -translate-y-1/2 text-slate-400 xl:block" />
+        </div>
+
+        <div className="space-y-3">
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">低階代理</div>
+          {agents.map((agent) => (
+            <div key={agent} className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm font-medium text-slate-700">
+              {agent}
+            </div>
+          ))}
         </div>
       </div>
     </SectionCard>

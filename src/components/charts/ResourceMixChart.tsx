@@ -18,7 +18,7 @@ export function ResourceMixChart() {
             <Cell key={entry.name} fill={entry.color} />
           ))}
         </Pie>
-        <Tooltip formatter={(value) => [`${value}%`, '已清算組合']} />
+        <Tooltip formatter={(value) => [`${value}%`, '清算組合']} />
         <Legend wrapperStyle={{ fontSize: 12 }} />
       </PieChart>
     </ResponsiveContainer>

@@ -2,30 +2,28 @@ import {
   BarChart3,
   ClipboardList,
   Database,
-  Gauge,
-  Landmark,
   LineChart,
-  ShieldAlert,
-  Zap,
+  RadioTower,
+  Route,
+  Users,
 } from 'lucide-react';
 
 const menuItems = [
   { label: '市場總覽', icon: BarChart3, active: true },
+  { label: '市場參與者', icon: Users },
   { label: '投標 / 報價', icon: ClipboardList },
   { label: '市場清算', icon: LineChart },
-  { label: '調度發布', icon: Zap },
-  { label: '計量資料', icon: Gauge },
-  { label: '結算管理', icon: Landmark },
-  { label: '信用風險', icon: ShieldAlert },
-  { label: '公開市場資料', icon: Database },
+  { label: '調度結果', icon: Route },
+  { label: '代理回饋', icon: RadioTower },
+  { label: '市場資料', icon: Database },
 ];
 
 export function Sidebar() {
   return (
     <aside className="hidden w-64 shrink-0 border-r border-slate-200 bg-white lg:block">
       <div className="border-b border-slate-200 px-5 py-5">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">市場入口</p>
-        <p className="mt-2 text-sm font-medium text-slate-700">交易營運控制台</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">研究平台</p>
+        <p className="mt-2 text-sm font-medium text-slate-700">VPP 交易模型</p>
       </div>
       <nav className="space-y-1 p-3">
         {menuItems.map((item) => {
@@ -46,8 +44,8 @@ export function Sidebar() {
         })}
       </nav>
       <div className="m-4 rounded-lg border border-cyan-100 bg-cyan-50 p-4 text-sm text-slate-700">
-        <p className="font-semibold text-market-navy">目前交易區間</p>
-        <p className="mt-1 text-slate-500">5 分鐘調度與結算預覽</p>
+        <p className="font-semibold text-market-navy">目前研究重點</p>
+        <p className="mt-1 text-slate-500">投標 / 報價清算、調度與代理回饋迴圈。</p>
       </div>
     </aside>
   );
